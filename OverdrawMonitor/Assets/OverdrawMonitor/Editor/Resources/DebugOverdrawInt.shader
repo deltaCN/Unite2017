@@ -23,6 +23,7 @@ Shader "Debug/OverdrawInt"
 			#pragma vertex vert
 			#pragma fragment frag
 			#pragma exclude_renderers d3d11_9x
+			#include "UnityCG.cginc"
 
 			struct appdata
 			{
@@ -44,7 +45,7 @@ Shader "Debug/OverdrawInt"
 			float4 frag (v2f i) : SV_Target
 			{
 				// 1 / 512 = 0.001953125; 1 / 1024 = 0.0009765625
-				return 0.0009765625;
+				return 0.001953125;
 			}
 			ENDCG
 		}

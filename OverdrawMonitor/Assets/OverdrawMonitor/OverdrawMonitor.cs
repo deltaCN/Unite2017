@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEditor;
 using UnityEngine;
 
 /// <summary> This is a singleton component that is responsible for measuring overdraw information
@@ -41,7 +42,7 @@ public class OverdrawMonitor : MonoBehaviour
 	}
 
 	private new Camera camera;
-	private RenderTexture overdrawTexture;
+	public RenderTexture overdrawTexture;
 
 	private ComputeShader computeShader;
 
@@ -93,7 +94,7 @@ public class OverdrawMonitor : MonoBehaviour
 #endif
 		
 		if (Application.isPlaying) DontDestroyOnLoad(gameObject);
-		gameObject.hideFlags = HideFlags.DontSave | HideFlags.HideInInspector;
+	    gameObject.hideFlags = HideFlags.DontSave;
 
 		// Prepare the camera that is going to render the scene with the initial overdraw data.
 		replacementShader = Shader.Find("Debug/OverdrawInt");
@@ -200,9 +201,10 @@ public class OverdrawMonitor : MonoBehaviour
 	{
 		if (camera != null)
 		{
-			camera.targetTexture = null;
+		    camera.targetTexture = null;
 		}
-		if (resultBuffer != null) resultBuffer.Release();
+	
+	    if (resultBuffer != null) resultBuffer.Release();
 	}
 
 	public void OnPostRender()
@@ -254,7 +256,13 @@ public class OverdrawMonitor : MonoBehaviour
 	{
 		enabled = false;
 		camera.enabled = false;
-	}
+        if (resultBuffer != null)
+        {
+            resultBuffer.Release();
+            resultBuffer = null;
+        }
+
+    }
 
 	public void SetSampleTime(float time)
 	{
