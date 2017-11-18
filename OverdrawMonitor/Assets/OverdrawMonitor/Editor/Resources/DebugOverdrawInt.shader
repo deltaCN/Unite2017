@@ -45,7 +45,7 @@ Shader "Debug/OverdrawInt"
 			float4 frag (v2f i) : SV_Target
 			{
 				// 1 / 512 = 0.001953125; 1 / 1024 = 0.0009765625
-				return 0.001953125;
+				return 0.0009765625;
 			}
 			ENDCG
 		}
